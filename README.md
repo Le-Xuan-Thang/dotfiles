@@ -1,15 +1,17 @@
 # Dotfiles
 
-Personal macOS configuration for:
+Personal macOS and Linux configuration for:
 
 - Zsh with Oh My Zsh and Powerlevel10k
 - Neovim with `lazy.nvim`, LSP support, formatting, Telescope, Treesitter, and Python debugging
 
 The files are managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-## Fresh macOS install
+## Fresh install
 
-### 1. Install Homebrew
+### 1. Install command-line tools
+
+#### macOS
 
 Install Apple's command-line tools:
 
@@ -23,17 +25,28 @@ Install [Homebrew](https://brew.sh/):
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 2. Install command-line tools
-
 ```sh
 brew install git stow neovim ripgrep zsh-autosuggestions zsh-syntax-highlighting
+```
+
+#### Ubuntu or Debian
+
+```sh
+sudo apt update
+sudo apt install git stow neovim ripgrep zsh python3-pip
+```
+
+#### Arch Linux
+
+```sh
+sudo pacman -S git stow neovim ripgrep zsh python-pip
 ```
 
 `ripgrep` is used by Telescope's live grep feature.
 
 Optional: install a [Nerd Font](https://www.nerdfonts.com/) for the best Neovim icon support.
 
-### 3. Install Oh My Zsh and Powerlevel10k
+### 2. Install Oh My Zsh and Powerlevel10k
 
 Install [Oh My Zsh](https://ohmyz.sh/):
 
@@ -57,7 +70,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
   ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 ```
 
-### 4. Clone and link the dotfiles
+### 3. Clone and link the dotfiles
 
 Back up existing config files before linking:
 
@@ -74,7 +87,7 @@ cd ~/dotfiles
 stow --target="$HOME" .
 ```
 
-### 5. Review machine-specific Zsh settings
+### 4. Review machine-specific Zsh settings
 
 Before starting a new shell, review the bottom of `~/.zshrc`. It currently contains paths specific to the original machine, including:
 
@@ -84,7 +97,13 @@ Before starting a new shell, review the bottom of `~/.zshrc`. It currently conta
 ~/.local/bin/env
 ```
 
-Remove or update any paths that do not exist on the new machine. The `/opt/homebrew` paths assume an Apple Silicon Mac.
+Remove or update any paths that do not exist on the new machine. The `/opt/homebrew` paths assume an Apple Silicon Mac and must be removed or replaced on Linux.
+
+On Linux, set Zsh as the default shell if needed:
+
+```sh
+chsh -s "$(which zsh)"
+```
 
 Start a new shell:
 
@@ -108,11 +127,25 @@ nvim
 
 On the first launch, Neovim automatically clones `lazy.nvim` and installs the configured plugins. Mason installs the configured Lua and Python language servers. Python debugging uses `debugpy`.
 
-The configured formatters are:
+Install the configured formatters and Python debugger:
+
+macOS:
 
 ```sh
 brew install stylua
 python3 -m pip install black debugpy
+```
+
+Arch Linux:
+
+```sh
+sudo pacman -S stylua python-black python-debugpy
+```
+
+Ubuntu and Debian users can install `black` and `debugpy` with `pip`. Install `stylua` using a package source available for your distribution.
+
+```sh
+python3 -m pip install --user black debugpy
 ```
 
 Run `:Lazy`, `:Mason`, or `:checkhealth` inside Neovim to inspect the installation.
