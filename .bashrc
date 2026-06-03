@@ -130,7 +130,7 @@ module use /opt/modulefiles
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
 # opencode
-export PATH=/home/whoami/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
