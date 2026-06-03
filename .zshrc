@@ -8,6 +8,9 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
+# Environment Modules (module load, module avail, etc.).
+[[ -r /usr/share/modules/init/zsh ]] && source /usr/share/modules/init/zsh
+
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -125,6 +128,9 @@ export PATH="/opt/homebrew/bin/tex/bin:$PATH"
 
 [[ -r "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
+# Change colors folder in terminal
+export LS_COLORS="${LS_COLORS}:di=01;34:ow=01;33:tw=01;33"
 
 # Added by Antigravity
 export PATH="/Users/lexuanthang/.antigravity/antigravity/bin:$PATH"

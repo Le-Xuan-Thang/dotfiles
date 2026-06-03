@@ -3,6 +3,7 @@
 Personal macOS and Linux configuration for:
 
 - Zsh with Oh My Zsh and Powerlevel10k
+- Tmux with zsh, true color, vi copy mode, mouse support, and sensible pane defaults
 - Neovim with `lazy.nvim`, LSP support, formatting, Telescope, Treesitter, and Python debugging
 
 The files are managed with [GNU Stow](https://www.gnu.org/software/stow/).
@@ -26,20 +27,20 @@ Install [Homebrew](https://brew.sh/):
 ```
 
 ```sh
-brew install git stow neovim ripgrep zsh-autosuggestions zsh-syntax-highlighting
+brew install git stow tmux neovim ripgrep zsh-autosuggestions zsh-syntax-highlighting
 ```
 
 #### Ubuntu or Debian
 
 ```sh
 sudo apt update
-sudo apt install git stow neovim ripgrep zsh python3-pip
+sudo apt install git stow tmux neovim ripgrep zsh python3-pip
 ```
 
 #### Arch Linux
 
 ```sh
-sudo pacman -S git stow neovim ripgrep zsh python-pip
+sudo pacman -S git stow tmux neovim ripgrep zsh python-pip
 ```
 
 `ripgrep` is used by Telescope's live grep feature.
@@ -76,6 +77,7 @@ Back up existing config files before linking:
 
 ```sh
 mv ~/.zshrc ~/.zshrc.backup 2>/dev/null || true
+mv ~/.tmux.conf ~/.tmux.conf.backup 2>/dev/null || true
 mv ~/.config/nvim ~/.config/nvim.backup 2>/dev/null || true
 ```
 
@@ -86,6 +88,8 @@ git clone https://github.com/Le-Xuan-Thang/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 stow --target="$HOME" .
 ```
+
+Stow links `.tmux.conf` from this repository to `~/.tmux.conf`, which keeps the tmux setup compatible with older and newer tmux versions.
 
 ### 4. Review machine-specific Zsh settings
 
