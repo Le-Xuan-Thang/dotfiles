@@ -133,7 +133,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 export LS_COLORS="${LS_COLORS}:di=01;34:ow=01;33:tw=01;33"
 
 # Added by Antigravity
-export PATH="/Users/lexuanthang/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # opencode
-export PATH=/Users/lexuanthang/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
