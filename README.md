@@ -6,7 +6,7 @@ This repository is managed with [GNU Stow](https://www.gnu.org/software/stow/). 
 
 ## What is included
 
-- `.zshrc`: Oh My Zsh, Powerlevel10k, syntax highlighting, autosuggestions, module support, and machine-specific PATH entries.
+- `.zshrc`: Oh My Zsh, Powerlevel10k, syntax highlighting, autosuggestions, module support, and OS-specific Homebrew/Linuxbrew setup.
 - `.bashrc`: Bash defaults for Linux-style environments, completion, module support, Linuxbrew, opencode, and Bun.
 - `.tmux.conf`: tmux with true color, mouse mode, vi copy mode, one-based panes/windows, current-directory splits, and a reload binding.
 - `.config/nvim`: a Kickstart-based Neovim configuration using Neovim's built-in `vim.pack` plugin manager.
@@ -36,6 +36,12 @@ Arch Linux:
 
 ```sh
 sudo pacman -S git stow tmux neovim ripgrep make zsh python-pip
+```
+
+Linuxbrew is optional on Linux, but `.zshrc` and `.bashrc` will use it automatically when it exists at `/home/linuxbrew/.linuxbrew`:
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 Install a Nerd Font if you want icons in Neovim and Powerlevel10k to render correctly.
@@ -109,13 +115,21 @@ stow --delete --target="$HOME" .
 Review `.zshrc` and `.bashrc` before using this repo on a new machine. Some entries intentionally point to local installations or host-specific paths, including:
 
 ```sh
-/opt/homebrew
+/opt/homebrew              # macOS Apple Silicon Homebrew
+/usr/local                 # macOS Intel Homebrew
 $HOME/.antigravity
 $HOME/.opencode
-/home/linuxbrew/.linuxbrew
+/home/linuxbrew/.linuxbrew # Linuxbrew
 ```
 
-Remove or update paths that do not exist on the target machine. Prefer `$HOME` for user-local paths instead of hardcoded usernames. The Homebrew paths are split between Apple Silicon macOS and Linuxbrew setups.
+Remove or update paths that do not exist on the target machine. Prefer `$HOME` for user-local paths instead of hardcoded usernames.
+
+`.zshrc` detects the operating system with `uname -s` before loading Homebrew:
+
+- `Darwin`: tries `/opt/homebrew/bin/brew` first for Apple Silicon macOS, then `/usr/local/bin/brew` for Intel macOS.
+- `Linux`: tries `/home/linuxbrew/.linuxbrew/bin/brew`.
+
+When a matching `brew` binary exists, `.zshrc` runs `brew shellenv zsh` to add `brew` to `PATH` and configure Homebrew environment variables, man pages, info pages, and zsh completions.
 
 After linking, start a fresh shell:
 

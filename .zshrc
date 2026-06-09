@@ -124,7 +124,24 @@ for syntax_highlighting in \
 done
 unset syntax_highlighting
 
-export PATH="/opt/homebrew/bin/tex/bin:$PATH"
+# Configure Homebrew by operating system.
+# - macOS Apple Silicon: /opt/homebrew
+# - macOS Intel: /usr/local
+# - Linux: /home/linuxbrew/.linuxbrew
+# `brew shellenv zsh` adds brew to PATH and sets HOMEBREW_PREFIX, MANPATH,
+# INFOPATH, and zsh completion paths for the current platform.
+case "$(uname -s)" in
+  Darwin)
+    for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+      [[ -x "$brew_bin" ]] && eval "$("$brew_bin" shellenv zsh)" && break
+    done
+
+    [[ -d /opt/homebrew/bin/tex/bin ]] && export PATH="/opt/homebrew/bin/tex/bin:$PATH"
+    ;;
+  Linux)
+    [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+    ;;
+esac
 
 [[ -r "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
