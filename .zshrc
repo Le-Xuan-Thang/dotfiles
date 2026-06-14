@@ -8,6 +8,13 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
+# Homebrew env for non-login shells too (login shells get this from ~/.zprofile).
+# Without this, tools installed under /opt/homebrew/bin (e.g. codex) are not on
+# PATH when an app spawns a non-login zsh.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Environment Modules (module load, module avail, etc.).
 [[ -r /usr/share/modules/init/zsh ]] && source /usr/share/modules/init/zsh
 
@@ -114,7 +121,6 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-
 
 for syntax_highlighting in \
   /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
