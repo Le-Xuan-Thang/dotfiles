@@ -156,6 +156,37 @@ Useful bindings:
 
 Mouse mode is enabled, copy mode uses vi keys, windows and panes start at `1`, and windows are renumbered automatically.
 
+### Khắc phục lỗi không vào được tmux
+
+Triệu chứng: chạy `tmux` nhưng không vào được phiên làm việc, hoặc cửa sổ tmux vừa mở đã thoát ngay.
+
+Nguyên nhân từng gặp nằm trong `.tmux.conf`:
+
+```tmux
+set-option -g default-shell "$SHELL"
+set-option -g default-command "SHELL"
+```
+
+Dòng `default-shell` là hợp lệ vì `$SHELL` được thay bằng đường dẫn shell hiện tại, ví dụ `/bin/zsh`. Tuy nhiên, `default-command "SHELL"` yêu cầu tmux chạy một chương trình có tên chính xác là `SHELL`; nó không tham chiếu đến biến môi trường `$SHELL`.
+
+Do không có chương trình tên `SHELL`, pane đầu tiên thoát ngay. Khi pane cuối cùng biến mất, tmux server cũng kết thúc, khiến người dùng có cảm giác tmux không khởi động được.
+
+Cách sửa là xóa dòng `default-command` và chỉ giữ:
+
+```tmux
+set-option -g default-shell "$SHELL"
+```
+
+tmux sẽ tự chạy shell đã cấu hình cho pane mới. Có thể xác minh bằng một phiên detached:
+
+```sh
+tmux new-session -d -s tmux-test
+tmux list-panes -t tmux-test -F '#{pane_dead} #{pane_current_command}'
+tmux kill-session -t tmux-test
+```
+
+Kết quả mong đợi là pane có `pane_dead` bằng `0` và command là `zsh` hoặc shell đang sử dụng.
+
 ## Neovim
 
 The Neovim setup is based on Kickstart and uses `vim.pack`, so there is no `lazy-lock.json` or external plugin manager bootstrap.
