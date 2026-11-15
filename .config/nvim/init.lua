@@ -693,6 +693,12 @@ do
     -- clangd = {},
     -- gopls = {},
     pyright = {},
+    tinymist = {
+      setting  = {
+        lsp_format  = 'typstyle',
+      },
+    },
+
     -- rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
