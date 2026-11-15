@@ -249,7 +249,7 @@ end
 
 -- ============================================================
 -- SECTION 2: PLUGIN MANAGER INTRO
--- vim.pack intro, build hooks
+-- vim.pack intro, build hooks / sử dụng vim.pack để quản lý
 -- ============================================================
 do
   -- [[ Intro to `vim.pack` ]]
@@ -339,6 +339,10 @@ do
   -- and then call its `setup()` function to start it with default settings.
   vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
   require('guess-indent').setup {}
+
+  -- Copy the current file's path or name to the system clipboard.
+  vim.pack.add { gh 'h3pei/copy-file-path.nvim' }
+
 
   -- Because lua is a real programming language, you can also have some logic to your installation -
   -- like only installing a plugin if a condition is met.
