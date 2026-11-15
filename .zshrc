@@ -164,3 +164,11 @@ export PATH="$HOME/.opencode/bin:$PATH"
 
 # Added by Antigravity CLI installer
 export PATH="/Users/lexuanthang/.local/bin:$PATH"
+
+# pi coding agent (Civix) — load API key from ~/.pi/agent/.env
+# Secret is kept OUTSIDE this public dotfiles repo; edit that .env to rotate the key.
+if [[ -r "$HOME/.pi/agent/.env" ]]; then
+  set -a
+  source "$HOME/.pi/agent/.env"
+  set +a
+fi
