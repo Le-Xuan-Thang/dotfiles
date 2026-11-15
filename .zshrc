@@ -160,3 +160,7 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/lexuanthang/.local/bin:$PATH"
