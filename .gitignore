@@ -1,2 +1,7 @@
 docs
 scripts
+
+.env
+.env.*
+*.local
+.DS_Store
